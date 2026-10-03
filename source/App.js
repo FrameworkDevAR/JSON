@@ -14,6 +14,7 @@ import Mode          from "./core/Mode.js";
 import Toast         from "./core/Toast.js";
 import Tooltip       from "./core/Tooltip.js";
 import Popup         from "./core/Popup.js";
+import Apps          from "./core/Apps.js";
 
 
 
@@ -28,6 +29,7 @@ export const mode          = new Mode();
 export const toast         = new Toast();
 export const tooltip       = new Tooltip();
 export const popup         = new Popup();
+export const apps          = new Apps("json", ".header-logo");
 export const settings      = new Settings(configs, Keys.getShortcuts());
 export const historyDialog = new HistoryDialog();
 export const saver         = new Saver();
