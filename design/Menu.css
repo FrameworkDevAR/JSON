@@ -82,28 +82,28 @@
     align-items: center;
     gap: 10px;
     height: var(--bar-height);
-    padding: 0 16px 0 4px;
+    padding: 0 16px 0 5px;
     border: 1px solid var(--border-color);
     border-radius: var(--pill-radius);
     background-color: var(--card-color);
     z-index: var(--z-menu);
 }
 .header-logo {
-    flex: 0 0 28px;
+    flex: 0 0 32px;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    border-radius: 12px;
     background-color: black;
     color: white;
 }
 .header-logo .svg-icon {
     --icon-image: var(--logo-icon);
 
-    width: 16px;
-    height: 16px;
+    width: 17px;
+    height: 17px;
 }
 .header h1 {
     display: flex;
@@ -166,6 +166,7 @@
     right: var(--menu-position);
     display: flex;
     align-items: center;
+    height: var(--bar-height);
     gap: 8px;
     z-index: var(--z-mode);
 }
@@ -174,8 +175,9 @@
     display: flex;
     align-items: center;
     list-style: none;
+    height: var(--pill-height);
     margin: 0;
-    padding: var(--menu-padding);
+    padding: 0 calc((var(--pill-height) - var(--menu-size)) / 2 - 1px);
     border: 1px solid var(--border-color);
     border-radius: var(--pill-radius);
     background-color: var(--card-color);
