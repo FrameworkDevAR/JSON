@@ -1,0 +1,56 @@
+# JSON
+
+> A JSON editor that runs in the browser, at https://json.frameworkphp.com.ar/.
+> A link can carry a document, so opening it shows the document right away,
+> as a tree, as a table or as text, and two of them compared.
+
+The document goes after the `#` of the link, which the browser never sends
+anywhere. There are two ways to write it.
+
+## Written out
+
+For a short document. The value is percent-encoded, the way
+`encodeURIComponent` in JavaScript and `urllib.parse.quote(text, safe="")` in
+Python do it: a space is `%20`, a new line is `%0A`, and a `+` stays a plus.
+
+    https://json.frameworkphp.com.ar/#json=<text>
+
+## Packed
+
+For anything longer. The fields go in a JSON object, which is gzipped and
+written in base64, in either alphabet, with or without the padding.
+
+    https://json.frameworkphp.com.ar/#z=<base64 of the gzip of the JSON>
+
+In Python:
+
+    import base64, gzip, json
+    fields = { "json": document, "name": "result.json", "mode": "tree" }
+    packed = base64.urlsafe_b64encode(gzip.compress(json.dumps(fields).encode())).decode()
+    print("https://json.frameworkphp.com.ar/#z=" + packed)
+
+In a shell, with the document on disk:
+
+    jq -n --slurpfile doc result.json '{json: $doc[0], name: "result.json"}' \
+        | gzip -9 | base64 | tr -d '\n' \
+        | sed 's|^|https://json.frameworkphp.com.ar/#z=|'
+
+## Fields
+
+- `json`: the document. In a packed link it is either the JSON itself or its
+  text; written out it is always the text. A text that is not valid JSON is
+  shown as it is, with where it stops being JSON.
+- `name`: optional, the name of the document.
+- `mode`: optional, one of `tree` (the default), `table` (for a list of
+  objects) or `text`.
+- `right`, `rightName`: optional, a second document, shown beside the first.
+- `compare`: optional, `true` to mark where the two documents differ.
+
+## Showing it
+
+Give the link as a Markdown link, since the address is long. When you run on
+the machine of whoever is to see the document, open it for them instead, which
+has no chat in the way to cut a long address short:
+
+    open "<link>"          # macOS
+    xdg-open "<link>"      # Linux
