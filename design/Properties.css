@@ -1,0 +1,146 @@
+/**
+ * Properties
+ */
+:root {
+    --main-font: Geist, "Helvetica Nueue", Helvetica, Arial, sans-serif;
+    --title-font: Geist, "Helvetica Nueue", Helvetica, Arial, sans-serif;
+    --mono-font: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+    --close-icon: url("../icons/close.svg");
+    --chevron-icon: url("../icons/chevron.svg");
+    --logo-icon: url("../icons/logo.svg");
+    --light-icon: url("../icons/light.svg");
+    --dark-icon: url("../icons/dark.svg");
+    --system-icon: url("../icons/system.svg");
+    --settings-icon: url("../icons/settings.svg");
+    --expand-icon: url("../icons/expand.svg");
+    --collapse-icon: url("../icons/collapse.svg");
+    --format-icon: url("../icons/format.svg");
+    --smart-icon: url("../icons/smart.svg");
+    --compact-icon: url("../icons/compact.svg");
+    --sort-icon: url("../icons/sort.svg");
+    --filter-icon: url("../icons/filter.svg");
+    --search-icon: url("../icons/search.svg");
+    --repair-icon: url("../icons/repair.svg");
+    --undo-icon: url("../icons/undo.svg");
+    --redo-icon: url("../icons/redo.svg");
+    --dots-icon: url("../icons/dots.svg");
+    --wrap-icon: url("../icons/wrap.svg");
+    --schema-icon: url("../icons/schema.svg");
+    --new-icon: url("../icons/new.svg");
+    --open-icon: url("../icons/open.svg");
+    --save-icon: url("../icons/save.svg");
+    --copy-icon: url("../icons/copy.svg");
+    --grow-icon: url("../icons/grow.svg");
+    --shrink-icon: url("../icons/shrink.svg");
+    --compare-icon: url("../icons/compare.svg");
+    --link-icon: url("../icons/link.svg");
+
+    --menu-position: 16px;
+    --menu-size: 28px;
+    --menu-padding: 4px;
+    --bar-height: 38px;
+
+    --head-height: 46px;
+    --tools-height: 36px;
+    --line-height: 20px;
+    --row-height: 24px;
+
+    --btn-height: 38px;
+    --btn-small-height: 24px;
+    --btn-tiny-height: 22px;
+
+    --dialog-close: 0.2s;
+
+    --border-radius: 16px;
+    --panel-radius: 24px;
+    --dialog-radius: 32px;
+    --input-radius: 16px;
+    --pill-radius: 9999px;
+
+    --z-main: 1;
+    --z-menu: 99;
+    --z-dialog: 100;
+    --z-mode: 200;
+}
+
+.light-mode {
+    --black-color: black;
+    --white-color: white;
+    --main-color: #18181b;
+    --background-color: #f2f2f3;
+    --backdrop-color: rgba(9, 9, 11, 0.42);
+    --card-color: #ffffff;
+    --sunk-color: #f1f1f4;
+    --field-color: #fafafa;
+    --hover-color: rgb(233, 234, 245);
+    --border-color: #e5e5e8;
+    --input-color: #e5e5e8;
+
+    --accent-color: oklch(0.55 0.16 276);
+    --accent-soft: oklch(0.55 0.16 276 / 0.09);
+
+    --tip-key-color: rgba(255, 255, 255, 0.16);
+
+    --add-color: oklch(0.5 0.15 150);
+    --add-soft: oklch(0.7 0.17 150 / 0.13);
+    --add-mark: oklch(0.7 0.17 150 / 0.36);
+    --remove-color: oklch(0.55 0.19 25);
+    --remove-soft: oklch(0.65 0.2 25 / 0.11);
+    --remove-mark: oklch(0.65 0.2 25 / 0.3);
+    --change-color: oklch(0.52 0.14 245);
+    --change-soft: oklch(0.65 0.16 245 / 0.13);
+    --change-mark: oklch(0.65 0.16 245 / 0.34);
+
+    --string-color: oklch(0.5 0.12 250);
+    --number-color: oklch(0.55 0.16 300);
+    --boolean-color: oklch(0.58 0.14 70);
+    --keyword-color: oklch(0.5 0.17 320);
+    --property-color: oklch(0.48 0.1 200);
+    --function-color: oklch(0.45 0.12 260);
+    --variable-color: oklch(0.5 0.14 30);
+
+    --dark-color: hsl(240, 5%, 26%);
+    --light-color: hsl(240, 5%, 38%);
+    --lighter-color: hsl(240, 4%, 57%);
+}
+.dark-mode {
+    --black-color: white;
+    --white-color: black;
+    --main-color: #f2f2f4;
+    --background-color: #101012;
+    --backdrop-color: rgba(9, 9, 11, 0.62);
+    --card-color: #18181b;
+    --sunk-color: #232329;
+    --field-color: #1f1f23;
+    --hover-color: #26262c;
+    --border-color: #2a2a30;
+    --input-color: #2a2a30;
+
+    --accent-color: oklch(0.72 0.15 276);
+    --accent-soft: oklch(0.72 0.15 276 / 0.13);
+
+    --tip-key-color: rgba(0, 0, 0, 0.12);
+
+    --add-color: oklch(0.78 0.16 150);
+    --add-soft: oklch(0.7 0.17 150 / 0.16);
+    --add-mark: oklch(0.7 0.17 150 / 0.4);
+    --remove-color: oklch(0.75 0.17 25);
+    --remove-soft: oklch(0.65 0.2 25 / 0.16);
+    --remove-mark: oklch(0.65 0.2 25 / 0.38);
+    --change-color: oklch(0.78 0.12 245);
+    --change-soft: oklch(0.65 0.16 245 / 0.18);
+    --change-mark: oklch(0.65 0.16 245 / 0.4);
+
+    --string-color: oklch(0.78 0.1 250);
+    --number-color: oklch(0.78 0.13 300);
+    --boolean-color: oklch(0.8 0.14 70);
+    --keyword-color: oklch(0.78 0.14 320);
+    --property-color: oklch(0.78 0.1 200);
+    --function-color: oklch(0.8 0.1 260);
+    --variable-color: oklch(0.78 0.12 30);
+
+    --dark-color: hsl(240, 7%, 78%);
+    --light-color: hsl(240, 7%, 60%);
+    --lighter-color: hsl(240, 5%, 51%);
+}

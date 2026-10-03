@@ -1,0 +1,508 @@
+/**
+ * Dialogs
+ */
+.backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: var(--z-dialog);
+    background-color: var(--backdrop-color);
+    backdrop-filter: blur(3px);
+}
+dialog {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 460px;
+    max-width: 92vw;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin: 0;
+    padding: 32px;
+    transform: translate(-50%, -50%);
+    color: var(--main-color);
+    background-color: var(--card-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--dialog-radius);
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: center;
+    animation: json-pop 0.34s cubic-bezier(0.2, 0.8, 0.3, 1) both;
+}
+
+.backdrop.closing {
+    animation: json-fade-out var(--dialog-close) ease both;
+}
+.backdrop.closing dialog {
+    animation: json-drop var(--dialog-close) cubic-bezier(0.4, 0, 1, 1) both;
+}
+dialog h2 {
+    margin: 0;
+    color: var(--main-color);
+    font-family: var(--title-font);
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.02em;
+}
+dialog > p {
+    margin: 0;
+    color: var(--lighter-color);
+}
+dialog > .close {
+    --close-color: var(--main-color);
+    --close-size: 26px;
+    --close-width: 11px;
+
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    background-color: var(--card-color);
+}
+dialog > .close:hover {
+    --close-color: var(--accent-color);
+    border-color: var(--accent-color);
+    background-color: var(--accent-soft);
+}
+
+dialog footer {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+dialog > form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+
+
+/**
+ * History Dialog
+ */
+.history-dialog dialog {
+    box-sizing: border-box;
+    width: 520px;
+    max-height: min(640px, 100vh - 96px);
+}
+.history-empty {
+    display: none;
+}
+.history-scroll {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-height: 0;
+    overflow-y: auto;
+}
+.history-section h3 {
+    margin: 0 0 6px 0;
+    color: var(--lighter-color);
+    font-family: var(--main-font);
+    font-size: 12px;
+    font-weight: 600;
+    text-align: left;
+    text-transform: uppercase;
+}
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.history-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: var(--input-radius);
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.history-list li:hover {
+    background-color: var(--hover-color);
+}
+.history-text {
+    flex: 1;
+    min-width: 0;
+}
+.history-name {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.history-name i,
+.history-meta i {
+    flex-shrink: 0;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background-color: var(--lighter-color);
+    opacity: 0.6;
+}
+.history-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 3px;
+    color: var(--lighter-color);
+    font-family: var(--mono-font);
+    font-size: 10px;
+    white-space: nowrap;
+}
+.history-list .close {
+    --close-color: var(--dark-color);
+    --close-size: var(--btn-small-height);
+    --close-width: 10px;
+
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    background-color: var(--card-color);
+}
+.history-list .close:hover {
+    --close-color: var(--remove-color);
+
+    border-color: var(--remove-color);
+    background-color: var(--remove-soft);
+}
+
+
+
+/**
+ * Settings Dialog
+ */
+.settings-dialog dialog {
+    box-sizing: border-box;
+    max-height: min(620px, 100vh - 96px);
+    overflow: hidden;
+}
+.settings-scroll {
+    --list-fade: 16px;
+
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    mask-image: linear-gradient(
+        to bottom,
+        transparent 0,
+        #000 min(var(--list-fade), var(--fade-above, 0px)),
+        #000 calc(100% - min(var(--list-fade), var(--fade-below, 0px))),
+        transparent 100%
+    );
+}
+.settings-dialog form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-height: 0;
+    padding-bottom: 8px;
+    overflow-y: auto;
+}
+.settings-dialog h3 {
+    margin: 8px 0 0 0;
+    color: var(--lighter-color);
+    font-family: var(--main-font);
+    font-size: 12px;
+    font-weight: 600;
+    text-align: left;
+    text-transform: uppercase;
+}
+.settings-dialog .toggle-input {
+    justify-content: flex-start;
+    text-align: left;
+}
+
+.keys-list {
+    display: none;
+    flex-direction: column;
+    gap: 2px;
+    margin: 0;
+    padding: 0;
+    min-height: 0;
+    overflow-y: auto;
+    list-style: none;
+    text-align: left;
+}
+.keys-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 7px 10px;
+    border-radius: 10px;
+}
+.keys-list li:nth-child(odd) {
+    background-color: var(--sunk-color);
+}
+.keys-keys {
+    flex: 0 0 110px;
+    display: flex;
+    gap: 4px;
+}
+.keys-keys b {
+    box-sizing: border-box;
+    min-width: 24px;
+    padding: 2px 6px;
+    border: 1px solid var(--border-color);
+    border-bottom-width: 2px;
+    border-radius: 6px;
+    background-color: var(--card-color);
+    color: var(--main-color);
+    font-family: var(--main-font);
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 16px;
+    text-align: center;
+}
+.keys-list span {
+    color: var(--light-color);
+    font-size: 13px;
+}
+.keys-list span b {
+    color: var(--main-color);
+    font-weight: 600;
+}
+.settings-dialog dialog.show-keys form {
+    display: none;
+}
+.settings-dialog dialog.show-keys [data-action="save-settings"] {
+    display: none;
+}
+.settings-dialog dialog.show-keys .keys-list {
+    display: flex;
+}
+
+
+
+/**
+ * History Dialog
+ */
+.history-where {
+    font-size: 13px;
+}
+.history-where b {
+    color: var(--main-color);
+    font-weight: 600;
+}
+.history-name code {
+    color: var(--light-color);
+    font-family: var(--mono-font);
+    font-size: 11px;
+    font-weight: 400;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+
+/**
+ * Wide Dialogs
+ */
+.wide-dialog dialog {
+    box-sizing: border-box;
+    width: 640px;
+    max-height: calc(100vh - 48px);
+    gap: 16px;
+    overflow-y: auto;
+}
+.area-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+}
+.code-area {
+    box-sizing: border-box;
+    width: 100%;
+    height: 180px;
+    margin: 0;
+    padding: 10px 12px;
+    border: 1px solid var(--input-color);
+    border-radius: var(--input-radius);
+    background-color: var(--field-color);
+    font-family: var(--mono-font);
+    font-size: 12px;
+    line-height: 1.5;
+    resize: vertical;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.code-area:focus {
+    box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.code-area::placeholder {
+    color: var(--lighter-color);
+}
+
+
+
+/**
+ * Choice
+ */
+.choice {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    text-align: left;
+}
+.choice > span {
+    margin-right: 6px;
+}
+.choice input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+.choice label span {
+    display: block;
+    padding: 4px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--pill-radius);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.choice label span:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+.choice input:checked + span {
+    border-color: var(--main-color);
+    background-color: var(--main-color);
+    color: var(--card-color);
+}
+.choice input:focus-visible + span {
+    box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.field > select {
+    appearance: none;
+    cursor: pointer;
+    background-image: linear-gradient(45deg, transparent 50%, var(--lighter-color) 50%),
+        linear-gradient(135deg, var(--lighter-color) 50%, transparent 50%);
+    background-position: calc(100% - 8px) 8px, calc(100% - 4px) 8px;
+    background-size: 4px 4px;
+    background-repeat: no-repeat;
+}
+.field > select:focus {
+    outline: none;
+}
+
+
+
+/**
+ * Transform Dialog
+ */
+.transform-dialog .code-area {
+    height: 96px;
+}
+.wizard {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--input-radius);
+}
+.wizard-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 26px;
+}
+.wizard-row > span {
+    flex: 0 0 44px;
+    color: var(--lighter-color);
+    font-size: 12px;
+    text-align: left;
+}
+.wizard select,
+.wizard input {
+    flex: 1;
+    min-width: 0;
+    height: 26px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0 8px;
+    border: 1px solid var(--input-color);
+    border-radius: 9px;
+    background-color: var(--card-color);
+    font-size: 12px;
+}
+.wizard select {
+    appearance: none;
+    padding-right: 22px;
+    background-image: linear-gradient(45deg, transparent 50%, var(--lighter-color) 50%),
+        linear-gradient(135deg, var(--lighter-color) 50%, transparent 50%);
+    background-position: calc(100% - 12px) 11px, calc(100% - 8px) 11px;
+    background-size: 4px 4px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+.wizard select[name="filterSign"],
+.wizard select[name="sortWay"] {
+    flex: 0 0 auto;
+}
+.wizard select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+.wizard-picks {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+.wizard-pick {
+    padding: 2px 9px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--pill-radius);
+    color: var(--light-color);
+    font-family: var(--mono-font);
+    font-size: 11px;
+    text-decoration: none;
+    transition: all 0.15s;
+}
+.wizard-pick:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+.wizard-pick.selected {
+    border-color: var(--accent-color);
+    background-color: var(--accent-soft);
+    color: var(--accent-color);
+}
+.transform-preview {
+    box-sizing: border-box;
+    height: 150px;
+    margin: 0;
+    padding: 10px 12px;
+    border-radius: var(--input-radius);
+    background-color: var(--sunk-color);
+    color: var(--light-color);
+    font-family: var(--mono-font);
+    font-size: 11px;
+    line-height: 1.5;
+    text-align: left;
+    white-space: pre;
+    overflow: auto;
+}
+.transform-dialog .toggle-input {
+    justify-content: flex-start;
+    text-align: left;
+    font-size: 13px;
+}
