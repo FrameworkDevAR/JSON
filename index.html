@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>JSON</title>
+        <link rel="icon" href="icons/favicon.svg" type="image/svg+xml" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="design/Main.css" />
+        <script type="module" src="source/Main.js"></script>
+    </head>
+    <body class="light-mode">
+        <header class="header">
+            <div class="header-logo">
+                <i class="svg-icon"></i>
+            </div>
+            <h1 data-action="open-history" data-tip="Open the history" data-tip-bottom aria-label="Open the history">
+                <span>JSON</span>
+                <i class="arrow header-caret"></i>
+            </h1>
+            <div class="header-status"></div>
+        </header>
+
+        <main class="main">
+            <article class="panel" data-side="left"></article>
+
+            <aside class="between">
+                <button class="between-btn between-right" data-action="copy-right" data-tip="Copy the left document to the right" aria-label="Copy the left document to the right">
+                    <i class="arrow"></i>
+                </button>
+                <button class="between-btn between-left" data-action="copy-left" data-tip="Copy the right document to the left" aria-label="Copy the right document to the left">
+                    <i class="arrow"></i>
+                </button>
+                <i class="between-line"></i>
+                <button class="between-btn between-compare" data-action="toggle-compare" data-tip="Compare the two documents" aria-label="Compare the two documents">
+                    <i class="svg-icon"></i>
+                </button>
+                <div class="between-steps">
+                    <button class="between-btn between-prev" data-action="prev-difference" data-tip="The difference before" aria-label="The difference before">
+                        <i class="arrow"></i>
+                    </button>
+                    <span class="between-count">–/0</span>
+                    <button class="between-btn between-next" data-action="next-difference" data-tip="The next difference" aria-label="The next difference">
+                        <i class="arrow"></i>
+                    </button>
+                </div>
+                <div class="between-grip" aria-label="Drag to change the size of the panels">
+                    <i class="svg-icon"></i>
+                </div>
+            </aside>
+
+            <article class="panel" data-side="right"></article>
+        </main>
+
+        <div class="top">
+            <ol class="icons">
+                <li class="icon-settings" data-action="open-settings" data-tip="Settings" data-tip-bottom aria-label="Settings">
+                    <i class="svg-icon"></i>
+                </li>
+            </ol>
+            <ol class="mode">
+                <li class="mode-light selected" data-action="mode-light" data-tip="Light mode" data-tip-bottom aria-label="Light mode">
+                    <i class="svg-icon"></i>
+                </li>
+                <li class="mode-system" data-action="mode-system" data-tip="Follow the system" data-tip-bottom aria-label="Follow the system">
+                    <i class="svg-icon"></i>
+                </li>
+                <li class="mode-dark" data-action="mode-dark" data-tip="Dark mode" data-tip-bottom aria-label="Dark mode">
+                    <i class="svg-icon"></i>
+                </li>
+            </ol>
+        </div>
+
+        <div class="toast"></div>
+        <div class="popup"></div>
+        <div class="tooltip" popover="manual"></div>
+
+
+        <template id="panel-template">
+            <header class="panel-head">
+                <nav class="tabs">
+                    <span class="tabs-mark"></span>
+                    <a href="#" class="selected" data-action="set-mode" data-mode="text">Text</a>
+                    <a href="#" data-action="set-mode" data-mode="tree">Tree</a>
+                    <a href="#" data-action="set-mode" data-mode="table">Table</a>
+                </nav>
+                <input type="text" class="panel-name" placeholder="Untitled" spellcheck="false" aria-label="The name of the document" />
+                <span class="panel-saved">Saved</span>
+                <div class="panel-file">
+                    <button class="tool" data-action="new-document" data-icon="new" data-tip="New document" data-tip-bottom aria-label="New document"><i class="svg-icon"></i></button>
+                    <button class="tool" data-action="open-menu" data-icon="open" data-menu="open" data-tip="Open a document" data-tip-bottom aria-label="Open a document"><i class="svg-icon"></i></button>
+                    <button class="tool" data-action="open-menu" data-icon="save" data-menu="save" data-tip="Save the document" data-tip-bottom aria-label="Save the document"><i class="svg-icon"></i></button>
+                    <button class="tool" data-action="open-menu" data-icon="copy" data-menu="copy" data-tip="Copy the document" data-tip-bottom aria-label="Copy the document"><i class="svg-icon"></i></button>
+                    <i class="tool-line"></i>
+                    <button class="tool tool-grow" data-action="toggle-expand" data-icon="grow" data-tip="Show this panel alone, or the two of them" data-tip-bottom aria-label="Show this panel alone, or the two of them"><i class="svg-icon"></i></button>
+                </div>
+            </header>
+
+            <div class="panel-tools">
+                <button class="tool tool-fold" data-action="expand-all" data-icon="expand" data-tip="Expand all" data-tip-bottom aria-label="Expand all"><i class="svg-icon"></i></button>
+                <button class="tool tool-fold" data-action="collapse-all" data-icon="collapse" data-tip="Collapse all" data-tip-bottom aria-label="Collapse all"><i class="svg-icon"></i></button>
+                <i class="tool-line tool-fold"></i>
+                <button class="tool tool-text" data-action="format" data-icon="format" data-tip="Format: a line for each thing" data-tip-bottom aria-label="Format: a line for each thing"><i class="svg-icon"></i></button>
+                <button class="tool tool-text" data-action="smart-format" data-icon="smart" data-tip="Smart format: what fits in a line stays in one" data-tip-bottom aria-label="Smart format: what fits in a line stays in one"><i class="svg-icon"></i></button>
+                <button class="tool tool-text" data-action="compact" data-icon="compact" data-tip="Compact: all in the one line" data-tip-bottom aria-label="Compact: all in the one line"><i class="svg-icon"></i></button>
+                <button class="tool tool-repair" data-action="repair" data-icon="repair" data-tip="Repair a text that is almost JSON" data-tip-bottom aria-label="Repair a text that is almost JSON"><i class="svg-icon"></i></button>
+                <i class="tool-line tool-text"></i>
+                <button class="tool" data-action="open-sort" data-icon="sort" data-tip="Sort" data-tip-bottom aria-label="Sort"><i class="svg-icon"></i></button>
+                <button class="tool" data-action="open-transform" data-icon="filter" data-tip="Transform: filter, sort and pick with a query" data-tip-bottom aria-label="Transform: filter, sort and pick with a query"><i class="svg-icon"></i></button>
+                <button class="tool" data-action="toggle-search" data-icon="search" data-tip="Search and replace" data-tip-bottom aria-label="Search and replace"><i class="svg-icon"></i></button>
+                <button class="tool tool-tree" data-action="selected-menu" data-icon="dots" data-tip="What can be done with the selected row" data-tip-bottom aria-label="What can be done with the selected row"><i class="svg-icon"></i></button>
+                <i class="tool-line"></i>
+                <button class="tool tool-undo" data-action="undo" data-icon="undo" data-tip="Undo" data-tip-bottom aria-label="Undo"><i class="svg-icon"></i></button>
+                <button class="tool tool-redo" data-action="redo" data-icon="redo" data-tip="Redo" data-tip-bottom aria-label="Redo"><i class="svg-icon"></i></button>
+                <span class="tool-space"></span>
+                <button class="tool tool-text tool-wrap" data-action="toggle-wrap" data-icon="wrap" data-tip="Wrap the long lines" data-tip-bottom aria-label="Wrap the long lines"><i class="svg-icon"></i></button>
+                <button class="tool tool-schema" data-action="open-schema" data-icon="schema" data-tip="Check with a JSON Schema" data-tip-bottom aria-label="Check with a JSON Schema"><i class="svg-icon"></i></button>
+            </div>
+
+            <div class="panel-search">
+                <input type="text" class="search-find" placeholder="Find" spellcheck="false" aria-label="Find" />
+                <span class="search-count"></span>
+                <button class="tool search-prev" data-action="search-prev" aria-label="The one before"><i class="arrow"></i></button>
+                <button class="tool search-next" data-action="search-next" aria-label="The next one"><i class="arrow"></i></button>
+                <i class="tool-line"></i>
+                <input type="text" class="search-replace" placeholder="Replace with" spellcheck="false" aria-label="Replace with" />
+                <button class="tool" data-action="replace-one">Replace</button>
+                <button class="tool" data-action="replace-all">All</button>
+                <a href="#" class="close" data-action="close-search" aria-label="Close the search"></a>
+            </div>
+
+            <div class="panel-path"></div>
+
+            <div class="panel-body">
+                <div class="view text-view">
+                    <div class="text-scroll">
+                        <pre class="text-lines"></pre>
+                        <div class="text-code">
+                            <div class="text-paint"></div>
+                            <textarea placeholder="Paste the JSON here, or drop a file" spellcheck="false" autocomplete="off" autocapitalize="off" wrap="off" aria-label="The text of the document"></textarea>
+                        </div>
+                    </div>
+                    <div class="panel-start">
+                        <button class="btn btn-small" data-action="upload-file">Open a file</button>
+                        <button class="btn btn-small" data-action="load-example">Example</button>
+                    </div>
+                </div>
+                <div class="view tree-view" tabindex="0"></div>
+                <div class="view table-view" tabindex="0"></div>
+                <div class="panel-drop">
+                    <div class="panel-drop-box"></div>
+                    <p>Drop the file here</p>
+                </div>
+            </div>
+
+            <div class="panel-problems"></div>
+
+            <footer class="panel-foot">
+                <span class="foot-place"></span>
+                <span class="foot-info"></span>
+                <span class="foot-state"></span>
+            </footer>
+        </template>
+
+
+        <section>
+            <div class="backdrop history-dialog" data-dialog="history">
+                <dialog open>
+                    <h2>History</h2>
+                    <p class="history-empty">Nothing has been worked on yet. Every document lands here, and the ones you save stay for good.</p>
+                    <p class="history-where">A document opens in the <b class="history-side">left</b> panel, which is the one you last touched.</p>
+                    <div class="history-scroll">
+                        <section class="history-section" data-section="pinned">
+                            <h3>Saved</h3>
+                            <ol class="history-list"></ol>
+                        </section>
+                        <section class="history-section" data-section="recent">
+                            <h3>Recent</h3>
+                            <ol class="history-list"></ol>
+                        </section>
+                    </div>
+                    <footer>
+                        <button class="btn" data-action="clear-recent">Clear the recent</button>
+                        <button class="btn" data-action="close-history">Close</button>
+                    </footer>
+                    <a href="#" class="close" data-action="close-history"></a>
+                </dialog>
+            </div>
+
+
+            <div class="backdrop" data-dialog="save">
+                <dialog open>
+                    <h2>Save the document</h2>
+                    <p>A saved document stays in the history for good, under its name.</p>
+                    <form>
+                        <div class="field" data-field="name">
+                            <label>Name</label>
+                            <input type="text" name="name" placeholder="What the document is" />
+                            <div class="error" data-error="name">You must name the document.</div>
+                        </div>
+                        <footer>
+                            <button class="btn btn-fill dialog-btn" data-action="save-entry">Save</button>
+                            <button class="btn save-forget" data-action="forget-entry">Forget</button>
+                            <button class="btn" data-action="close-save">Cancel</button>
+                        </footer>
+                    </form>
+                    <a href="#" class="close" data-action="close-save"></a>
+                </dialog>
+            </div>
+
+
+            <div class="backdrop" data-dialog="open">
+                <dialog open>
+                    <h2>Open an address</h2>
+                    <p>The document is fetched by the browser, so the site it is on has to allow it.</p>
+                    <form>
+                        <div class="field" data-field="name">
+                            <label>Address</label>
+                            <input type="text" name="url" placeholder="https://" spellcheck="false" />
+                            <div class="error" data-error="text"></div>
+                        </div>
+                        <footer>
+                            <button class="btn btn-fill" data-action="load-url">Open</button>
+                            <button class="btn" data-action="close-open">Cancel</button>
+                        </footer>
+                    </form>
+                    <a href="#" class="close" data-action="close-open"></a>
+                </dialog>
+            </div>
+
+
+            <div class="backdrop wide-dialog" data-dialog="schema">
+                <dialog open>
+                    <h2>JSON Schema</h2>
+                    <p>The document is checked against the schema as it changes, and what does not answer it is listed under it. An empty schema checks nothing.</p>
+                    <div class="area-field">
+                        <textarea class="code-area" placeholder='{ "type": "object", "required": [ "name" ] }' spellcheck="false"></textarea>
+                        <div class="error" data-error="text"></div>
+                    </div>
+                    <footer>
+                        <button class="btn btn-fill" data-action="save-schema">Save the schema</button>
+                        <button class="btn" data-action="close-schema">Cancel</button>
+                    </footer>
+                    <a href="#" class="close" data-action="close-schema"></a>
+                </dialog>
+            </div>
+
+
+            <div class="backdrop wide-dialog transform-dialog" data-dialog="transform">
+                <dialog open>
+                    <h2>Transform</h2>
+                    <p class="transform-where"></p>
+                    <nav class="tabs">
+                        <span class="tabs-mark"></span>
+                        <a href="#" class="selected" data-action="transform-language" data-language="query">Query</a>
+                        <a href="#" data-action="transform-language" data-language="jsonpath">JSONPath</a>
+                        <a href="#" data-action="transform-language" data-language="javascript">JavaScript</a>
+                    </nav>
+                    <div class="wizard">
+                        <div class="wizard-row">
+                            <span>Filter</span>
+                            <select name="filterField" aria-label="The value to filter by"></select>
+                            <select name="filterSign" aria-label="How to compare it"></select>
+                            <input type="text" name="filterValue" placeholder="value" spellcheck="false" aria-label="What to compare it with" />
+                        </div>
+                        <div class="wizard-row">
+                            <span>Sort</span>
+                            <select name="sortField" aria-label="The value to sort by"></select>
+                            <select name="sortWay" aria-label="Which way to sort">
+                                <option value="asc">ascending</option>
+                                <option value="desc">descending</option>
+                            </select>
+                        </div>
+                        <div class="wizard-row">
+                            <span>Pick</span>
+                            <div class="wizard-picks"></div>
+                        </div>
+                    </div>
+                    <div class="area-field">
+                        <textarea class="code-area transform-query" placeholder='.items | filter(.price > 10) | sort(.name) | pick(.name, .price)' spellcheck="false"></textarea>
+                        <div class="error" data-error="query"></div>
+                    </div>
+                    <pre class="transform-preview"></pre>
+                    <label class="toggle-input" data-field="toOther">
+                        <input type="checkbox" role="switch" name="toOther" value="1" />
+                        <div>Put the result in the other panel, and leave this document as it is</div>
+                    </label>
+                    <footer>
+                        <button class="btn btn-fill" data-action="apply-transform">Transform</button>
+                        <button class="btn" data-action="close-transform">Cancel</button>
+                    </footer>
+                    <a href="#" class="close" data-action="close-transform"></a>
+                </dialog>
+            </div>
+
+
+            <div class="backdrop settings-dialog" data-dialog="settings">
+                <dialog open>
+                    <h2>Settings</h2>
+                    <nav class="tabs">
+                        <span class="tabs-mark"></span>
+                        <a href="#" class="selected" data-action="settings-tab" data-tab="options">Options</a>
+                        <a href="#" data-action="settings-tab" data-tab="keys">Shortcuts</a>
+                    </nav>
+                    <div class="settings-scroll">
+                        <ol class="keys-list"></ol>
+                        <form>
+                            <h3>Text</h3>
+                            <div class="choice">
+                                <span>Set each level in with</span>
+                                <label><input type="radio" name="indent" value="2" /><span>2 spaces</span></label>
+                                <label><input type="radio" name="indent" value="4" /><span>4 spaces</span></label>
+                                <label><input type="radio" name="indent" value="tab" /><span>A tab</span></label>
+                            </div>
+                            <label class="toggle-input" data-field="paintCode">
+                                <input type="checkbox" role="switch" name="paintCode" value="1" />
+                                <div>Color the text, each part as what it is</div>
+                            </label>
+                            <label class="toggle-input" data-field="wrapText">
+                                <input type="checkbox" role="switch" name="wrapText" value="1" />
+                                <div>Wrap the long lines</div>
+                            </label>
+
+                            <h3>Tree and table</h3>
+                            <label class="toggle-input" data-field="showTags">
+                                <input type="checkbox" role="switch" name="showTags" value="1" />
+                                <div>Show the colors, the dates and the links for the values that are one</div>
+                            </label>
+                            <label class="toggle-input" data-field="spreadColumns">
+                                <input type="checkbox" role="switch" name="spreadColumns" value="1" />
+                                <div>Give each value of an object inside a row its own column</div>
+                            </label>
+                        </form>
+                    </div>
+                    <footer>
+                        <button class="btn btn-fill" data-action="save-settings">Save settings</button>
+                        <button class="btn" data-action="close-settings">Cancel</button>
+                    </footer>
+                    <a href="#" class="close" data-action="close-settings"></a>
+                </dialog>
+            </div>
+        </section>
+    </body>
+</html>
