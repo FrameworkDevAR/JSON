@@ -68,6 +68,22 @@ export function setActive(panel) {
 }
 
 /**
+ * Lets go of the Panels: neither is marked as the one being worked on,
+ * and whatever of them had the keys gives them up. The one that was last
+ * worked on is still the one the keys and the dialogs go to
+ * @returns {Void}
+ */
+export function clearActive() {
+    for (const side of SIDES) {
+        panels[side].element.classList.remove("active");
+    }
+    const element = document.activeElement;
+    if (element instanceof HTMLElement && element.closest(".panel")) {
+        element.blur();
+    }
+}
+
+/**
  * Returns the Panel the given Element is in, or the one being worked on
  * when it is in none
  * @param {*} target
