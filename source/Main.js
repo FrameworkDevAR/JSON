@@ -386,6 +386,15 @@ document.addEventListener("pointerdown", (e) => {
     const element = e.target instanceof Element ? e.target.closest(".panel") : null;
     if (element) {
         App.setActive(App.panelOf(element));
+        return;
+    }
+
+    // The page around the Panels is where to touch to let go of them. The
+    // header, the buttons between them, a menu and a dialog are not it
+    const isPage = e.target === document.body || e.target === document.documentElement ||
+        (e.target instanceof Element && e.target.matches(".main, .between"));
+    if (isPage) {
+        App.clearActive();
     }
 });
 document.addEventListener("focusin", (e) => {
