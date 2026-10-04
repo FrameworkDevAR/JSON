@@ -151,13 +151,19 @@
                             <textarea placeholder="Paste the JSON here, or drop a file" spellcheck="false" autocomplete="off" autocapitalize="off" wrap="off" aria-label="The text of the document"></textarea>
                         </div>
                     </div>
-                    <div class="panel-start">
-                        <button class="btn btn-small" data-action="upload-file">Open a file</button>
-                        <button class="btn btn-small" data-action="load-example">Example</button>
-                    </div>
                 </div>
                 <div class="view tree-view" tabindex="0"></div>
                 <div class="view table-view" tabindex="0"></div>
+                <div class="panel-start">
+                    <h3>Empty document</h3>
+                    <p>Paste the JSON here, or drop a file</p>
+                    <div>
+                        <button class="btn" data-action="upload-file">Open a file</button>
+                        <button class="btn" data-action="load-example">Example</button>
+                        <button class="btn start-new" data-action="new-value" data-value="object">Empty object</button>
+                        <button class="btn start-new" data-action="new-value" data-value="array">Empty list</button>
+                    </div>
+                </div>
                 <div class="panel-drop">
                     <div class="panel-drop-box"></div>
                     <p>Drop the file here</p>

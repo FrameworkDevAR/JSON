@@ -177,7 +177,13 @@ export function setMode(panel, mode) {
     if (panel.mode === mode) {
         return true;
     }
-    return panel.setMode(mode);
+    if (!panel.setMode(mode)) {
+        return false;
+    }
+
+    // The keys go to the view right away, so what is pasted next lands in it
+    panel.focus();
+    return true;
 }
 
 /**

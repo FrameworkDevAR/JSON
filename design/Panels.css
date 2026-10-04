@@ -382,13 +382,46 @@
 .panel-start {
     display: none;
     position: absolute;
+    top: 50%;
     left: 50%;
-    bottom: 20%;
+    flex-direction: column;
+    align-items: center;
     gap: 8px;
-    translate: -50% 0;
+    width: max-content;
+    max-width: 100%;
+    translate: -50% -50%;
+    pointer-events: none;
+    z-index: 3;
 }
 .panel.is-empty .panel-start {
     display: flex;
+}
+.panel-start .btn {
+    pointer-events: auto;
+}
+.panel-start h3 {
+    margin: 0;
+    color: var(--main-color);
+    font-family: var(--title-font);
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+.panel-start p {
+    margin: 0;
+    color: var(--lighter-color);
+    font-size: 15px;
+}
+.panel-start div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 12px;
+}
+.panel[data-mode="text"] .start-new {
+    display: none;
 }
 
 .panel-drop {

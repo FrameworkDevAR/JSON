@@ -266,6 +266,10 @@ export default class Panel {
         this.#text     = text;
         this.#parsed   = null;
 
+        // What an empty document shows is gone at the first letter, and
+        // not once the typing rests
+        this.element.classList.toggle("is-empty", !text.trim());
+
         window.clearTimeout(this.#timer);
         this.#timer = window.setTimeout(() => {
             this.check();

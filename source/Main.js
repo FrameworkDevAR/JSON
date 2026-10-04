@@ -59,6 +59,9 @@ document.addEventListener("click", (e) => {
     case "load-example":
         Documents.loadExample(panel);
         break;
+    case "new-value":
+        Documents.newValue(panel, value);
+        break;
     case "save-file":
         Documents.saveFile(panel);
         break;
@@ -493,7 +496,10 @@ document.addEventListener("paste", (e) => {
     if (!isOnRows() || !e.clipboardData) {
         return;
     }
-    if (Tree.pasteText(App.active, e.clipboardData.getData("text/plain"))) {
+    // A Panel with no document takes what is pasted as its document
+    const text   = e.clipboardData.getData("text/plain");
+    const isDone = App.active.isEmpty ? Documents.pasteDocument(App.active, text) : Tree.pasteText(App.active, text);
+    if (isDone) {
         e.preventDefault();
     }
 });

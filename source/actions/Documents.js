@@ -338,6 +338,35 @@ function loadText(panel, name, text) {
 }
 
 /**
+ * Takes what was pasted over a Panel with no document as its document,
+ * and says whether there was anything to take
+ * @param {Panel}  panel
+ * @param {String} text
+ * @returns {Boolean}
+ */
+export function pasteDocument(panel, text) {
+    if (!text.trim()) {
+        return false;
+    }
+    loadText(panel, "", text);
+    panel.focus();
+    return true;
+}
+
+/**
+ * Starts the document of the Panel as an object or as a list with nothing
+ * in it, to be filled from the tree or from the table
+ * @param {Panel}  panel
+ * @param {String} kind
+ * @returns {Boolean}
+ */
+export function newValue(panel, kind) {
+    panel.setValue(kind === "array" ? [] : {}, []);
+    panel.focus();
+    return true;
+}
+
+/**
  * Puts the dropped files in: two go one to each side, in the order they
  * were dropped, and one goes where it was dropped
  * @param {Panel}    panel

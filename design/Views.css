@@ -94,8 +94,11 @@
     color: var(--remove-color);
     font-weight: 600;
 }
-.panel.is-empty .text-num {
+.panel.is-empty .text-code:not(:focus-within) .text-num {
     visibility: hidden;
+}
+.panel.is-empty .text-code:not(:focus-within) .text-line.is-active {
+    background-color: transparent;
 }
 .text-fold {
     position: absolute;
